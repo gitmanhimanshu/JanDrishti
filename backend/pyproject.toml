@@ -1,0 +1,45 @@
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = ["**/migrations/*", ".venv"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # bugbear
+    "UP",   # pyupgrade
+    "C4",   # comprehensions
+    "DJ",   # Django-specific
+    "S",    # bandit-style security
+    "RUF",
+]
+ignore = [
+    "E501",   # line length is handled by the formatter
+    "B008",   # Depends()-style defaults are idiomatic here
+    "RUF012", # Django class attrs are legitimately mutable
+    "S101",   # asserts are how pytest works
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S", "B"]
+"config/settings/*" = ["F403", "F405"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["jandrishti", "config"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.test"
+python_files = ["test_*.py"]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["jandrishti"]
+omit = ["*/migrations/*", "*/tests/*", "*/apps.py"]
+
+[tool.mypy]
+python_version = "3.12"
+warn_unused_configs = true
+ignore_missing_imports = true
+exclude = ["migrations", ".venv"]

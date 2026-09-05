@@ -1,0 +1,3072 @@
+# JAN DRISHTI
+
+## See. Suggest. Solve.
+
+You are a **Principal Software Architect, OOSD Expert, Senior Django/DRF Engineer, Senior Next.js/TypeScript Engineer, PostgreSQL Database Architect, Security Engineer, DevOps Engineer, Product Designer and UX Architect**.
+
+Your task is to design and build a **production-grade, scalable, secure and maintainable full-stack civic technology platform called JanDrishti**.
+
+Do not treat this as a tutorial project or a simple CRUD application.
+
+Build it as a serious product that can evolve from thousands of users to **10M+ users**.
+
+---
+
+# 1. PRODUCT NAME
+
+## JanDrishti
+
+### Tagline
+
+**See. Suggest. Solve.**
+
+Meaning:
+
+* **Jan** = People/Public
+* **Drishti** = Perspective/Vision
+
+The product should represent the collective perspective, experience and intelligence of citizens and professionals.
+
+Core philosophy:
+
+> **See → Report → Support → Suggest → Act → Prove → Impact**
+
+---
+
+# 2. PRODUCT VISION
+
+JanDrishti is a **public-first civic intelligence and action platform**.
+
+It brings together:
+
+1. Public Problems
+2. Evidence
+3. Community Support
+4. Professional Experience
+5. Expert Recommendations
+6. Government Action
+7. Transparent Progress
+8. Proof of Work
+9. Future Community Projects/Funding
+
+The platform should help answer:
+
+> What is the problem?
+
+> Where is it happening?
+
+> How many people are affected?
+
+> What evidence exists?
+
+> What do experienced people recommend?
+
+> Which department is responsible?
+
+> What action has been taken?
+
+> What has actually been completed?
+
+> Where is the proof?
+
+The central product lifecycle is:
+
+**Problem → Evidence → Experience → Recommendation → Action → Proof → Impact**
+
+Do NOT make JanDrishti look like a traditional government complaint portal.
+
+It should look like a modern, trustworthy civic-tech platform.
+
+---
+
+# 3. TWO FIRST-CLASS SECTIONS
+
+The application must have two major independent content areas:
+
+## A. Problems
+
+For reporting and tracking real-world public issues.
+
+Examples:
+
+* Broken roads
+* Potholes
+* Garbage
+* Water supply
+* Drainage
+* Streetlights
+* Public transport
+* Hospitals
+* Schools
+* Public infrastructure
+* Environmental issues
+* Public safety
+* Government service problems
+* Administrative delays
+* Civic problems
+* Corruption concerns
+* Public resource misuse
+* Other legitimate public issues
+
+---
+
+## B. Experience & Ideas
+
+This is NOT limited to retired people.
+
+It is for:
+
+* Working professionals
+* Retired professionals
+* Government employees where policy permits
+* Retired government employees
+* Armed forces personnel where policy permits
+* Retired armed forces personnel
+* Engineers
+* Doctors
+* Lawyers
+* Teachers
+* Administrators
+* Civil servants
+* Researchers
+* Entrepreneurs
+* Technology professionals
+* Infrastructure professionals
+* Healthcare professionals
+* Education professionals
+* Environmental experts
+* Social workers
+* Industry professionals
+* Domain experts
+* Experienced citizens
+
+Core principle:
+
+> **Relevant experience and useful knowledge matter more than employment status.**
+
+---
+
+# 4. PUBLIC-FIRST ACCESS MODEL
+
+This is one of the most important requirements.
+
+## Anyone should be able to browse publicly.
+
+Authentication must NOT be required for reading public content.
+
+Anonymous users can:
+
+* Visit landing page
+* Browse Problems
+* Search Problems
+* Filter Problems
+* Open Problem details
+* View public evidence
+* View public maps
+* View public status
+* View government responses
+* View progress timeline
+* Browse Experience & Ideas
+* Read Experience posts
+* Read comments
+* Read replies
+* View support counts
+* Browse Projects
+* View public project progress
+* View public funding information
+* View public expenses/proof where applicable
+* Share public URLs
+* Browse departments/categories/states
+* View public impact statistics
+
+---
+
+# 5. LOGIN REQUIRED ONLY FOR INTERACTION
+
+If an anonymous user attempts an action that changes data or represents participation, require login.
+
+Examples:
+
+* Support a Problem
+* "I face this problem"
+* Support an Experience
+* Comment
+* Reply
+* Bookmark
+* Follow
+* Report content
+* Submit a Problem
+* Submit Experience
+* Upload evidence
+* Create a Project
+* Contribute to a project
+* Submit professional verification
+* Update profile
+* Any other write operation
+
+Use a reusable frontend mechanism:
+
+```text
+requireAuth(action)
+```
+
+Flow:
+
+```text
+Anonymous User
+      ↓
+Clicks "Support this issue"
+      ↓
+Authentication check
+      ↓
+Not authenticated
+      ↓
+Login Modal
+      ↓
+Continue with Google
+      ↓
+Google OAuth
+      ↓
+JanDrishti account
+      ↓
+Return to original page
+      ↓
+Complete original action
+```
+
+Do NOT force the user to manually navigate back after login whenever it can be avoided.
+
+---
+
+# 6. AUTHENTICATION
+
+Initial authentication method:
+
+## Google OAuth only
+
+Do NOT implement:
+
+* Password login
+* Password registration
+* OTP after Google login
+
+Flow:
+
+```text
+Continue with Google
+        ↓
+Google Authentication
+        ↓
+JanDrishti Account
+        ↓
+Basic Profile
+        ↓
+Select User Type
+        ↓
+Home
+```
+
+Google authentication only proves control of the Google account.
+
+It does NOT automatically prove:
+
+* professional status
+* government employment
+* retired status
+* armed forces background
+* domain expertise
+
+Keep authentication and professional verification completely separate.
+
+---
+
+# 7. GLOBAL ACCOUNT
+
+Create one global JanDrishti account.
+
+A user can use the same account for:
+
+* Problems
+* Experience
+* Comments
+* Support
+* Bookmarks
+* Follows
+* Projects
+* Contributions
+* Professional verification
+* Notifications
+
+Use an immutable internal:
+
+```text
+user_id
+```
+
+as primary identity.
+
+Never use email as the primary database key.
+
+Google identity:
+
+```text
+google_subject UNIQUE
+```
+
+should be stored separately.
+
+---
+
+# 8. USER ROLES
+
+Support:
+
+```text
+CITIZEN
+PROFESSIONAL
+GOVERNMENT_OFFICIAL
+MODERATOR
+ADMIN
+```
+
+Professional subtypes can include:
+
+```text
+WORKING_PROFESSIONAL
+RETIRED_PROFESSIONAL
+GOVERNMENT_EMPLOYEE
+RETIRED_GOVERNMENT_EMPLOYEE
+ARMED_FORCES
+RETIRED_ARMED_FORCES
+DOMAIN_EXPERT
+OTHER
+```
+
+Do not assume role selection means verification.
+
+Authorization must always be enforced on the backend.
+
+Never trust frontend role values.
+
+---
+
+# 9. LANDING PAGE
+
+Create a premium, modern and professional landing page.
+
+Do NOT make it visually outdated or bureaucratic.
+
+Design direction:
+
+* Civic-tech
+* Trustworthy
+* Modern
+* Clean
+* Human
+* Data-driven
+* Accessible
+* Professional
+* Mobile-first
+
+Use:
+
+**Next.js + TypeScript + Tailwind CSS**
+
+---
+
+# 10. NAVBAR
+
+Create a sticky responsive navbar.
+
+### Left
+
+JanDrishti logo + wordmark.
+
+```text
+JanDrishti
+See. Suggest. Solve.
+```
+
+### Navigation
+
+```text
+Home
+Problems
+Experience & Ideas
+Projects
+How It Works
+About
+```
+
+Optional discovery links:
+
+```text
+Departments
+States
+Impact
+```
+
+### Right
+
+Anonymous:
+
+```text
+Search
+Login
+Report a Problem
+```
+
+Authenticated:
+
+```text
+Search
+Notifications
+Profile
+Report a Problem
+```
+
+The navbar must work on mobile using a clean menu/drawer.
+
+---
+
+# 11. HERO SECTION
+
+Hero headline:
+
+# See. Suggest. Solve.
+
+Supporting message:
+
+> Bring public problems, real-world experience, actionable ideas and transparent progress together — so communities can see what matters and help move it forward.
+
+Primary CTA:
+
+**Report a Problem**
+
+Secondary CTA:
+
+**Explore Problems**
+
+Third CTA:
+
+**Share an Experience**
+
+Show a visual journey:
+
+```text
+SEE
+ ↓
+REPORT
+ ↓
+EVIDENCE
+ ↓
+SUGGEST
+ ↓
+ACT
+ ↓
+PROVE
+```
+
+Use subtle professional animations only where they improve UX.
+
+---
+
+# 12. LANDING PAGE SECTIONS
+
+Include:
+
+## Hero
+
+## Public Impact Statistics
+
+Examples:
+
+* Problems Reported
+* Active Issues
+* Problems Resolved
+* Experiences Shared
+* Government Responses
+* Projects Completed
+
+Do NOT hardcode fake statistics.
+
+If no data exists, show honest zero/empty states.
+
+---
+
+## Trending Problems
+
+Show:
+
+* title
+* location
+* category
+* support count
+* status
+* priority
+* image
+* last updated
+
+CTA:
+
+**Explore all Problems**
+
+---
+
+## Experience & Ideas
+
+Show useful professional experiences and recommendations.
+
+Display:
+
+* title
+* author
+* professional category
+* verified badge
+* experience type
+* support count
+* comments
+* related problems
+
+CTA:
+
+**Explore Experience & Ideas**
+
+---
+
+## Why JanDrishti
+
+Five visual steps:
+
+### 01 — See
+
+Identify real problems.
+
+### 02 — Evidence
+
+Add location, photos, videos and documents.
+
+### 03 — Suggest
+
+Share professional experience and recommendations.
+
+### 04 — Act
+
+Departments and projects take action.
+
+### 05 — Prove
+
+Publish transparent progress and proof.
+
+---
+
+## How It Works
+
+```text
+Citizen
+   ↓
+Reports Problem
+   ↓
+Community
+   ↓
+Supports / Adds Evidence
+   ↓
+Experienced Professionals
+   ↓
+Provide Recommendations
+   ↓
+Government / Project Team
+   ↓
+Takes Action
+   ↓
+Public
+   ↓
+Sees Proof
+```
+
+---
+
+# 13. PROBLEMS PAGE
+
+Route:
+
+```text
+/problems
+```
+
+Publicly accessible.
+
+Features:
+
+* Search
+* Sort
+* Filter
+* Pagination
+* Map/list view where appropriate
+
+Filters:
+
+* Category
+* State
+* District
+* City
+* Department
+* Status
+* Priority
+* Date
+* Nearby
+* Verified
+* Issue cluster
+
+Tabs:
+
+### Trending
+
+Recent engagement and momentum.
+
+### Most Supported
+
+Highest unique supporters.
+
+### Most Reported
+
+Highest number of independent reports.
+
+### High Priority
+
+Important/urgent issues.
+
+### Nearby
+
+Location-based discovery when user permits location.
+
+### Recently Reported
+
+Latest issues.
+
+### Recently Updated
+
+Latest government/project updates.
+
+### Resolved
+
+Successfully resolved issues.
+
+---
+
+# 14. PROBLEM DETAIL PAGE
+
+Route:
+
+```text
+/problems/[id]
+```
+
+Publicly accessible.
+
+Display:
+
+* Title
+* Description
+* Category
+* Location
+* Map
+* City
+* District
+* State
+* Department
+* Priority
+* Status
+* Support count
+* Independent report count
+* Evidence count
+* Evidence gallery
+* Timeline
+* Government responses
+* Related Experience & Ideas
+* Related Projects
+* Issue cluster information
+* Before/after evidence
+* Last updated
+
+Primary CTA:
+
+**Support this issue**
+
+Alternative wording:
+
+**I face this problem**
+
+Do NOT use ordinary social-media "Like" semantics for Problems.
+
+If anonymous:
+
+Show login modal.
+
+---
+
+# 15. PROBLEM CREATION
+
+Authenticated users can report problems.
+
+Form:
+
+* Title
+* Description
+* Category
+* Location
+* GPS coordinates
+* Address
+* City
+* District
+* State
+* Department if known
+* Media
+* Additional evidence
+
+Allow multiple:
+
+* Photos
+* Videos
+* Documents
+
+Show upload progress.
+
+Validate uploads server-side.
+
+---
+
+# 16. MEDIA ARCHITECTURE
+
+Never use:
+
+```text
+photo1
+photo2
+photo3
+```
+
+Use normalized relational design.
+
+Entities:
+
+```text
+Media
+ProblemMedia
+ExperienceMedia
+ProjectUpdateMedia
+ExpenseEvidence
+```
+
+Cloudinary stores the actual media.
+
+PostgreSQL stores:
+
+* media ID
+* Cloudinary public ID
+* secure URL/reference
+* resource type
+* MIME type
+* file size
+* uploader
+* timestamps
+* metadata
+
+Media types:
+
+```text
+GENERAL
+BEFORE
+DURING
+AFTER
+EVIDENCE
+DOCUMENT
+```
+
+A Problem must support unlimited media.
+
+---
+
+# 17. EVIDENCE VERIFICATION
+
+Evidence status:
+
+```text
+UPLOADED
+UNDER_VERIFICATION
+VERIFIED
+REJECTED
+```
+
+Uploaded evidence is NOT automatically verified.
+
+Public UI should clearly distinguish:
+
+```text
+Uploaded evidence
+```
+
+from:
+
+```text
+✓ Verified evidence
+```
+
+AI must never independently decide whether serious allegations are true.
+
+---
+
+# 18. PROBLEM SUPPORT
+
+Create:
+
+```text
+problem_supports
+```
+
+Fields:
+
+```text
+problem_id
+user_id
+created_at
+```
+
+Constraint:
+
+```text
+UNIQUE(problem_id, user_id)
+```
+
+This prevents duplicate support.
+
+Support counts should be calculated/cached safely.
+
+Never trust client-submitted counters.
+
+---
+
+# 19. ISSUE CLUSTERING
+
+If 500 citizens report the same pothole/road problem:
+
+Do not leave 500 unrelated issues for government operations.
+
+Create an:
+
+```text
+IssueCluster
+```
+
+and connect individual reports to the cluster.
+
+Architecture:
+
+```text
+500 Citizen Reports
+       ↓
+Duplicate Detection
+       ↓
+Issue Cluster
+       ↓
+Government Action
+```
+
+But preserve all individual reports.
+
+Do not delete the original reports.
+
+Show:
+
+```text
+Reported by 500 people
+```
+
+or similar meaningful aggregation.
+
+Duplicate detection can use:
+
+* geographic proximity
+* category
+* title similarity
+* semantic similarity
+* time
+* visual similarity where appropriate
+
+AI suggestions must remain reviewable.
+
+---
+
+# 20. EXPERIENCE & IDEAS PAGE
+
+Route:
+
+```text
+/experience
+```
+
+Publicly accessible.
+
+Filters:
+
+* Experience
+* Root Cause
+* Policy Idea
+* Recommendation
+* Best Practice
+* Governance Improvement
+* Cost Reduction
+* Process Improvement
+* Technology Improvement
+* Healthcare
+* Education
+* Infrastructure
+* Environment
+* Disaster Management
+* Public Safety
+* Other
+
+---
+
+# 21. EXPERIENCE DETAIL
+
+Route:
+
+```text
+/experience/[id]
+```
+
+Publicly accessible.
+
+Show:
+
+* Title
+* Author
+* Professional category
+* Verification badge
+* Experience type
+* Content
+* Supporting evidence
+* Support count
+* Comments
+* Replies
+* Related Problems
+* Related Experiences
+* Share
+* Bookmark
+* Follow author
+
+Anonymous users can read.
+
+Authentication required for:
+
+* Support
+* Comment
+* Reply
+* Bookmark
+* Follow
+* Report
+* Submit
+
+---
+
+# 22. EXPERIENCE FORM
+
+Any eligible user can submit an Experience & Idea.
+
+Form:
+
+### Title
+
+### What problem did you observe?
+
+### Context
+
+### Root cause
+
+### What was your professional/personal experience?
+
+### Recommendation
+
+### How should it be implemented?
+
+### Expected impact
+
+### Challenges
+
+### Cost implications, if known
+
+### Relevant department
+
+### Relevant location
+
+### Supporting documents
+
+### Supporting media
+
+### Related Problems
+
+Allow an Experience to connect to multiple Problems.
+
+---
+
+# 23. EXPERIENCE TYPES
+
+Use structured types:
+
+```text
+PROFESSIONAL_EXPERIENCE
+ROOT_CAUSE_ANALYSIS
+POLICY_IDEA
+RECOMMENDATION
+BEST_PRACTICE
+GOVERNANCE_IMPROVEMENT
+COST_REDUCTION
+PROCESS_IMPROVEMENT
+TECHNOLOGY_IMPROVEMENT
+OTHER
+```
+
+---
+
+# 24. EXPERIENCE SUPPORT
+
+Create:
+
+```text
+experience_supports
+```
+
+with:
+
+```text
+experience_id
+user_id
+created_at
+```
+
+Constraint:
+
+```text
+UNIQUE(experience_id, user_id)
+```
+
+UI wording:
+
+**Support this idea**
+
+or:
+
+**I support this**
+
+Do not imply that high support means factual correctness.
+
+---
+
+# 25. COMMENTS
+
+Support:
+
+* comments
+* replies
+* threaded discussions
+
+Comment model should support:
+
+```text
+parent_comment_id
+```
+
+Prevent:
+
+* circular replies
+* infinite nesting
+* abusive nesting depth
+
+Implement configurable maximum nesting depth.
+
+Support moderation states.
+
+---
+
+# 26. SHARE / BOOKMARK / FOLLOW
+
+Implement:
+
+### Share
+
+Use public URLs.
+
+### Bookmark
+
+Authentication required.
+
+### Follow
+
+Users can follow:
+
+* authors
+* Problems
+* Experiences
+* Projects
+
+Notifications should be triggered when followed objects meaningfully change.
+
+---
+
+# 27. PROFESSIONAL PROFILE
+
+A user may optionally create a professional profile.
+
+Fields:
+
+* Professional category
+* Domain
+* Current/previous organization
+* Designation
+* Years of experience
+* State
+* City
+* Expertise areas
+
+Only non-sensitive information chosen for public visibility should be shown publicly.
+
+---
+
+# 28. PROFESSIONAL VERIFICATION
+
+Authentication and verification are separate.
+
+Create:
+
+```text
+ProfessionalVerification
+```
+
+Types:
+
+```text
+WORKING_PROFESSIONAL
+RETIRED_PROFESSIONAL
+GOVERNMENT_EMPLOYEE
+RETIRED_GOVERNMENT_EMPLOYEE
+ARMED_FORCES
+RETIRED_ARMED_FORCES
+DOMAIN_EXPERT
+OTHER
+```
+
+Statuses:
+
+```text
+PENDING
+VERIFIED
+REJECTED
+```
+
+---
+
+# 29. VERIFICATION DOCUMENTS
+
+Accept appropriate documents where relevant:
+
+* Organization-issued document
+* Employment/service document
+* Retirement/service document
+* Professional license/certificate
+* Government-issued professional document
+* Other legitimate supporting document
+
+### Aadhaar fallback
+
+If the user has no suitable professional document, allow an **optional Aadhaar-based fallback verification path**, subject to applicable law, privacy requirements and the actual verification provider used.
+
+Important:
+
+Aadhaar must NOT:
+
+* be mandatory for all users
+* be the primary database identity
+* be used as login credential
+* be displayed publicly
+* be exposed through APIs
+* be unnecessarily stored
+* appear in URLs
+* be shown in public profiles
+
+Prefer a compliant verification mechanism that minimizes retention of Aadhaar data.
+
+If document storage is technically required:
+
+* store privately
+* restrict access
+* encrypt/protect sensitive data
+* maintain audit logs
+* apply retention/deletion policy
+* never expose documents through public endpoints
+
+---
+
+# 30. VERIFICATION BADGES
+
+Examples:
+
+```text
+✓ Professionally Verified
+✓ Government Professional — Verified
+✓ Armed Forces Professional — Verified
+✓ Domain Expert — Verified
+```
+
+The badge means:
+
+> JanDrishti has verified the relevant professional claim/document.
+
+It does NOT mean JanDrishti endorses every statement made by that user.
+
+---
+
+# 31. CREDIBILITY
+
+Do not rank Experience solely on likes/support.
+
+Future credibility/relevance scoring can consider:
+
+```text
+Professional verification
+Relevant expertise
+Experience relevance
+Evidence quality
+Community support
+Problem relevance
+Discussion quality
+```
+
+Important:
+
+> Support is a signal, not proof of correctness.
+
+---
+
+# 32. GOVERNMENT DASHBOARD
+
+Authorized government users should have a separate dashboard.
+
+Features:
+
+* Assigned problems
+* Department problems
+* Issue clusters
+* Evidence
+* Support counts
+* Citizen reports
+* Related experiences
+* Government responses
+* Timeline
+* Projects
+
+Filters:
+
+* State
+* District
+* Department
+* Category
+* Priority
+* Status
+* Date
+
+Authorized officials can:
+
+* Acknowledge
+* Assign
+* Reassign
+* Update status
+* Add response
+* Add inspection
+* Upload documents
+* Add progress
+* Upload proof
+* Resolve issues
+
+Every important action must be audited.
+
+---
+
+# 33. PROBLEM STATUS LIFECYCLE
+
+Use explicit state transitions.
+
+```text
+SUBMITTED
+    ↓
+UNDER_REVIEW
+    ↓
+VERIFIED
+    ↓
+DEPARTMENT_ASSIGNED
+    ↓
+ACKNOWLEDGED
+    ↓
+INSPECTION
+    ↓
+ACTION_PLANNED
+    ↓
+WORK_STARTED
+    ↓
+WORK_IN_PROGRESS
+    ↓
+COMPLETED
+    ↓
+VERIFICATION
+    ↓
+RESOLVED
+```
+
+Alternative states:
+
+```text
+REJECTED
+DUPLICATE
+INSUFFICIENT_EVIDENCE
+OUTSIDE_JURISDICTION
+ALREADY_RESOLVED
+```
+
+Do not allow arbitrary status strings.
+
+Implement domain-level state transition validation.
+
+---
+
+# 34. PROOF OF WORK
+
+Maintain a permanent public timeline where appropriate.
+
+Example:
+
+```text
+Problem Reported
+       ↓
+Verified
+       ↓
+Department Assigned
+       ↓
+Inspection
+       ↓
+Action Planned
+       ↓
+Work Started
+       ↓
+Progress
+       ↓
+Completed
+       ↓
+Verification
+       ↓
+Resolved
+```
+
+Support evidence:
+
+* Before photos
+* During photos
+* After photos
+* Inspection reports
+* Work orders
+* Completion certificates
+* Government responses
+* Progress documents
+
+Uploaded evidence is not automatically verified.
+
+---
+
+# 35. PROJECTS
+
+A Problem can lead to one or more Projects.
+
+Example:
+
+```text
+Problem
+Broken Road
+
+        ↓
+
+Project
+Road Repair
+
+        ↓
+
+Milestones
+
+        ↓
+
+Expenses
+
+        ↓
+
+Proof
+```
+
+Project fields:
+
+```text
+id
+problem_id
+title
+description
+target_amount
+status
+start_date
+expected_end_date
+actual_end_date
+created_at
+updated_at
+```
+
+---
+
+# 36. COMMUNITY FUNDING
+
+Funding is a future-ready module.
+
+Do NOT launch real-money collection without proper legal/payment architecture.
+
+Never route community money into a personal bank account.
+
+If implemented, use appropriate:
+
+* regulated payment provider
+* legal entity
+* payment/escrow structure where applicable
+* KYC/AML requirements where applicable
+* refund/dispute process
+* financial auditability
+
+Models:
+
+```text
+FundingCampaign
+Contribution
+Expense
+ExpenseEvidence
+ProjectMilestone
+```
+
+Public information:
+
+```text
+Target
+Collected
+Spent
+Remaining
+```
+
+Expenses:
+
+* Amount
+* Vendor
+* Description
+* Date
+* Invoice/receipt
+* Proof
+* Verification status
+
+Do not promise automatic refunds unless the actual payment/legal architecture supports them.
+
+For MVP, create clean interfaces/abstractions but keep real payment functionality disabled unless correctly implemented.
+
+---
+
+# 37. DEPARTMENTS
+
+Create hierarchical:
+
+```text
+Department
+```
+
+Example:
+
+```text
+Municipal Corporation
+       ↓
+Road Department
+```
+
+Routing should use:
+
+* category
+* location
+* jurisdiction
+* department
+
+Do not hardcode routing logic inside API views.
+
+Use domain/application services.
+
+---
+
+# 38. CATEGORIES
+
+Create hierarchical categories.
+
+Examples:
+
+```text
+Infrastructure
+    Roads
+    Bridges
+    Streetlights
+
+Water
+    Supply
+    Drainage
+
+Healthcare
+    Hospitals
+    Clinics
+
+Education
+    Schools
+    Colleges
+```
+
+Allow administrators to manage categories.
+
+---
+
+# 39. RANKING ARCHITECTURE
+
+Use strategy-based ranking.
+
+Interface:
+
+```text
+RankingStrategy
+```
+
+Implement:
+
+```text
+TrendingRankingStrategy
+MostSupportedRankingStrategy
+MostReportedRankingStrategy
+HighPriorityRankingStrategy
+NearbyRankingStrategy
+RecentlyUpdatedRankingStrategy
+```
+
+This must follow Open/Closed Principle.
+
+Adding a new ranking should not require rewriting existing strategies.
+
+---
+
+# 40. AI ARCHITECTURE
+
+Create an abstraction:
+
+```text
+AIService
+```
+
+AI can assist with:
+
+* Category classification
+* Department suggestion
+* Duplicate detection
+* Issue clustering
+* Summarization
+* Translation
+* Structured information extraction
+* Recommendation relevance
+
+AI must NOT independently decide:
+
+* Whether corruption occurred
+* Whether a person is guilty
+* Whether evidence is authentic
+* Whether an official is corrupt
+* Final professional verification
+* Final legal conclusions
+
+Use human-in-the-loop workflows.
+
+---
+
+# 41. OOSD REQUIREMENTS
+
+This is mandatory.
+
+Use:
+
+* SOLID
+* Encapsulation
+* Abstraction
+* Polymorphism
+* Composition over inheritance where appropriate
+* Dependency inversion
+* Separation of concerns
+* Clean Architecture
+* DDD-inspired boundaries
+* Repository pattern
+* Service/use-case pattern
+* Strategy pattern
+* Factory pattern where appropriate
+* Adapter pattern for external services
+* DTO/serializer boundaries
+
+Do not create architecture merely to demonstrate design patterns.
+
+Every abstraction must solve a real problem.
+
+---
+
+# 42. CLEAN ARCHITECTURE
+
+Use conceptual layers:
+
+```text
+Presentation
+      ↓
+Application
+      ↓
+Domain
+      ↓
+Infrastructure
+```
+
+### Presentation
+
+* DRF APIs
+* Serializers
+* Authentication
+* Permissions
+
+### Application
+
+Use cases:
+
+```text
+CreateProblemUseCase
+SupportProblemUseCase
+CreateExperienceUseCase
+SupportExperienceUseCase
+CreateCommentUseCase
+SubmitVerificationUseCase
+UpdateProblemStatusUseCase
+CreateProjectUseCase
+```
+
+### Domain
+
+Contains:
+
+* Entities
+* Value objects
+* Business rules
+* Domain services
+* Interfaces
+
+### Infrastructure
+
+Contains:
+
+* Django ORM repositories
+* Cloudinary adapters
+* Redis adapters
+* OAuth adapters
+* Notification adapters
+* Payment adapters
+
+---
+
+# 43. DEPENDENCY INVERSION
+
+Business/domain logic must NOT directly depend on:
+
+* Cloudinary SDK
+* Redis
+* Django ORM
+* Payment provider
+* Email provider
+* AI provider
+
+Example:
+
+```text
+ProblemApplicationService
+        ↓
+ProblemRepositoryInterface
+        ↓
+DjangoProblemRepository
+```
+
+Media:
+
+```text
+MediaService
+      ↓
+MediaStorageInterface
+      ↓
+CloudinaryMediaStorage
+```
+
+AI:
+
+```text
+AIServiceInterface
+      ↓
+OpenAI / Other Provider Adapter
+```
+
+Payment:
+
+```text
+PaymentGatewayInterface
+      ↓
+PaymentProviderAdapter
+```
+
+This makes testing and future provider changes easier.
+
+---
+
+# 44. MODULAR MONOLITH
+
+Do NOT start with dozens of microservices.
+
+Use:
+
+# Modular Monolith
+
+Recommended modules:
+
+```text
+accounts
+authentication
+professional_verification
+problems
+experience
+media
+evidence
+issue_clustering
+categories
+departments
+comments
+social
+projects
+funding
+notifications
+moderation
+search
+analytics
+audit
+```
+
+Each module should have clear boundaries.
+
+Modules should communicate through:
+
+* application services
+* interfaces
+* domain events where useful
+
+Avoid random direct access across modules.
+
+---
+
+# 45. FUTURE MICROSERVICE EXTRACTION
+
+Architecture should allow future extraction of:
+
+* Authentication
+* Problems
+* Experience
+* Search
+* Notifications
+* Media processing
+* Analytics
+* Funding
+
+Do not create microservices prematurely.
+
+Only extract a service when actual:
+
+* traffic
+* scaling
+* deployment
+* ownership
+* failure isolation
+
+requirements justify it.
+
+---
+
+# 46. DATABASE
+
+Use:
+
+# PostgreSQL
+
+Design normalized relational entities.
+
+Core entities:
+
+```text
+User
+ProfessionalProfile
+ProfessionalVerification
+
+Problem
+ProblemSupport
+ProblemEvidence
+
+Experience
+ExperienceSupport
+ExperienceEvidence
+
+ProblemExperienceLink
+
+IssueCluster
+IssueClusterProblem
+
+Media
+
+Category
+Department
+
+Comment
+
+Bookmark
+Follow
+
+Project
+ProjectMilestone
+ProjectUpdate
+ProjectUpdateEvidence
+
+FundingCampaign
+Contribution
+
+Expense
+ExpenseEvidence
+
+GovernmentResponse
+
+Notification
+AuditLog
+```
+
+Use:
+
+* foreign keys
+* unique constraints
+* check constraints
+* indexes
+* composite indexes
+* partial indexes where useful
+* transactions
+
+Do not blindly add indexes.
+
+Design indexes based on actual queries.
+
+---
+
+# 47. DATABASE RELATIONSHIPS
+
+Conceptual structure:
+
+```text
+USER
+ ├── ProfessionalProfile
+ ├── ProfessionalVerification
+ ├── Problems
+ ├── Experiences
+ ├── Supports
+ ├── Comments
+ ├── Bookmarks
+ ├── Follows
+ └── Contributions
+
+
+PROBLEM
+ ├── Evidence
+ ├── Supports
+ ├── Comments
+ ├── Related Experiences
+ ├── Issue Cluster
+ ├── Government Responses
+ └── Projects
+
+
+EXPERIENCE
+ ├── Evidence
+ ├── Supports
+ ├── Comments
+ └── Related Problems
+
+
+PROJECT
+ ├── Milestones
+ ├── Funding Campaign
+ ├── Contributions
+ ├── Expenses
+ ├── Updates
+ └── Proof Evidence
+```
+
+---
+
+# 48. SCALABLE DATABASE DESIGN
+
+Design for millions of records.
+
+Requirements:
+
+* Cursor pagination where appropriate
+* Efficient joins
+* select_related
+* prefetch_related
+* Bulk operations
+* Proper indexes
+* Database constraints
+* Connection pooling
+* Read replicas as future option
+* Partitioning only when justified
+
+Never:
+
+* Load entire tables
+* Return unbounded API lists
+* Perform N+1 queries
+* Perform unnecessary queries inside loops
+
+---
+
+# 49. CONCURRENCY
+
+Handle concurrent requests correctly.
+
+Example:
+
+1000 users support the same Problem simultaneously.
+
+Do NOT:
+
+```text
+read count
+count += 1
+save
+```
+
+Use:
+
+* unique constraints
+* transactions
+* atomic database operations
+* safe aggregation
+* appropriate locking only where necessary
+
+Use Redis distributed locks only where a genuine distributed locking requirement exists.
+
+Do not use locks everywhere.
+
+---
+
+# 50. REDIS
+
+Use Redis for appropriate workloads:
+
+* caching
+* rate limiting
+* temporary state
+* distributed coordination where necessary
+* Celery broker/backend if selected
+
+Do not treat Redis as the primary source of truth for transactional data.
+
+---
+
+# 51. CELERY / BACKGROUND JOBS
+
+Use asynchronous processing for expensive operations:
+
+* AI processing
+* duplicate detection
+* issue clustering
+* media processing
+* notifications
+* emails
+* analytics
+* exports
+
+Jobs must be:
+
+* idempotent
+* retry-safe
+* observable
+* failure-tolerant
+
+Do not make users wait for expensive operations unnecessarily.
+
+---
+
+# 52. SEARCH
+
+Start with PostgreSQL search capabilities if they are sufficient.
+
+Create:
+
+```text
+SearchService
+```
+
+abstraction.
+
+Future architecture:
+
+```text
+SearchService
+      ↓
+PostgreSQL
+      OR
+OpenSearch/Elasticsearch
+```
+
+Do not introduce Elasticsearch simply because search exists.
+
+---
+
+# 53. API DESIGN
+
+Use REST APIs.
+
+Version:
+
+```text
+/api/v1/
+```
+
+Examples:
+
+```text
+/api/v1/auth/
+/api/v1/users/
+/api/v1/problems/
+/api/v1/problems/{id}
+/api/v1/problems/{id}/support/
+/api/v1/problems/{id}/evidence/
+
+/api/v1/experiences/
+/api/v1/experiences/{id}
+/api/v1/experiences/{id}/support/
+
+/api/v1/comments/
+/api/v1/projects/
+/api/v1/departments/
+/api/v1/categories/
+/api/v1/notifications/
+```
+
+Every collection endpoint must paginate.
+
+Use serializers/DTOs as API contracts.
+
+Do not expose internal implementation details.
+
+---
+
+# 54. API ERROR FORMAT
+
+Use a consistent structure:
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "PROBLEM_NOT_FOUND",
+    "message": "Problem not found"
+  }
+}
+```
+
+Never expose stack traces in production.
+
+---
+
+# 55. API SECURITY
+
+Implement:
+
+* authentication
+* authorization
+* RBAC
+* object-level permissions
+* rate limiting
+* input validation
+* upload validation
+* file-size limits
+* MIME validation
+* secure headers
+* CORS
+* CSRF protection where applicable
+* secure token/cookie handling
+* audit logging
+
+Backend must validate everything.
+
+Never trust frontend validation.
+
+---
+
+# 56. RATE LIMITING
+
+Protect:
+
+* OAuth endpoints
+* comments
+* support actions
+* Problem creation
+* Experience creation
+* uploads
+* verification
+* sensitive APIs
+
+Use Redis-backed rate limiting where appropriate.
+
+Different endpoints should have appropriate limits.
+
+---
+
+# 57. MODERATION
+
+Moderate:
+
+* spam
+* harassment
+* abusive comments
+* malicious uploads
+* duplicate content
+* misleading content
+* inappropriate material
+
+Use:
+
+* moderation status
+* human review
+* evidence workflows
+* audit logs
+
+Do not automatically declare allegations true or false merely using AI.
+
+---
+
+# 58. FRONTEND ARCHITECTURE
+
+Use:
+
+```text
+Next.js
+TypeScript
+Tailwind CSS
+```
+
+Feature-oriented architecture:
+
+```text
+src/
+    app/
+
+    features/
+        authentication/
+        problems/
+        experience/
+        projects/
+        profile/
+        government/
+        notifications/
+
+    components/
+        ui/
+        layout/
+
+    services/
+    hooks/
+    lib/
+    types/
+```
+
+Separate:
+
+* UI
+* business logic
+* API calls
+* state management
+* validation
+
+Avoid giant components.
+
+---
+
+# 59. FRONTEND UX
+
+Every major page must have:
+
+* Loading state
+* Skeleton state
+* Empty state
+* Error state
+* Success state
+* Mobile layout
+* Desktop layout
+* Accessibility
+
+Use:
+
+* keyboard navigation
+* semantic HTML
+* accessible labels
+* proper focus states
+* responsive design
+
+---
+
+# 60. AUTH-REQUIRED COMPONENT
+
+Create reusable:
+
+```text
+AuthRequiredModal
+```
+
+Example:
+
+Anonymous user:
+
+> Login to continue
+>
+> You need a JanDrishti account to support this public issue.
+>
+> [ Continue with Google ]
+>
+> Cancel
+
+For different actions, dynamically customize the message.
+
+Examples:
+
+> Login to comment
+
+> Login to support this issue
+
+> Login to share your experience
+
+After login, restore the original context.
+
+---
+
+# 61. PUBLIC SEO
+
+Public pages should be SEO-friendly.
+
+Implement:
+
+* metadata
+* Open Graph
+* Twitter/X metadata where appropriate
+* canonical URLs
+* structured metadata where useful
+* server-rendered public content where appropriate
+
+Public URLs:
+
+```text
+/problems/{id}
+```
+
+```text
+/experience/{id}
+```
+
+```text
+/projects/{id}
+```
+
+---
+
+# 62. NOTIFICATIONS
+
+Support:
+
+* Problem status changed
+* Government response
+* Experience comment
+* Comment reply
+* Followed Problem updated
+* Followed Experience updated
+* Project update
+* Verification result
+
+Use background jobs where appropriate.
+
+---
+
+# 63. AUDIT LOGGING
+
+Create:
+
+```text
+AuditLog
+```
+
+Track:
+
+* role changes
+* verification decisions
+* Problem status changes
+* government responses
+* evidence verification
+* expense verification
+* project updates
+* administrative actions
+* sensitive document access
+
+Audit records should be protected from ordinary users.
+
+---
+
+# 64. OBSERVABILITY
+
+Implement production observability.
+
+Track:
+
+* Request latency
+* Error rates
+* API throughput
+* Database performance
+* Background job failures
+* Queue depth
+* Redis health
+* Cache hit/miss
+* OAuth failures
+* Upload failures
+
+Use structured logs.
+
+Never log:
+
+* OAuth secrets
+* tokens
+* passwords
+* Aadhaar data
+* private verification documents
+
+---
+
+# 65. SCALABILITY ROADMAP
+
+## Stage 1 — 1K to 100K users
+
+Architecture:
+
+```text
+CDN
+ ↓
+Next.js
+ ↓
+Load Balancer
+ ↓
+Django instances
+ ↓
+PostgreSQL
+ ↓
+Redis
+ ↓
+Celery workers
+ ↓
+Cloudinary
+```
+
+---
+
+## Stage 2 — 100K to 1M
+
+Introduce as required:
+
+* Multiple Django instances
+* CDN
+* Better caching
+* Multiple Celery workers
+* PostgreSQL read replicas
+* Search optimization
+* Dedicated media processing
+
+---
+
+## Stage 3 — 1M to 10M+
+
+Potentially introduce:
+
+* PostgreSQL partitioning
+* OpenSearch
+* Dedicated search service
+* Dedicated notification service
+* Event-driven architecture
+* Media-processing service
+* Service extraction
+
+Only introduce these based on actual bottlenecks.
+
+---
+
+# 66. EVENT-DRIVEN EXTENSIBILITY
+
+Create domain/application events where useful.
+
+Examples:
+
+```text
+ProblemCreated
+ProblemSupported
+ProblemStatusChanged
+
+ExperienceCreated
+ExperienceSupported
+
+ProfessionalVerificationCompleted
+
+ProjectUpdated
+EvidenceVerified
+```
+
+Events can trigger:
+
+* notifications
+* analytics
+* search indexing
+* AI processing
+
+Do not introduce Kafka in MVP without a concrete requirement.
+
+Keep event publishing abstract enough that Kafka can be introduced later.
+
+---
+
+# 67. PERFORMANCE RULES
+
+Never:
+
+* Use N+1 queries
+* Return unlimited records
+* Process large files synchronously unnecessarily
+* Recalculate expensive aggregates on every request
+* Store media inside PostgreSQL
+* Trust frontend counters
+* Perform unnecessary DB calls
+* Load huge datasets into memory
+
+Use:
+
+* pagination
+* caching
+* async processing
+* indexes
+* aggregation
+* CDN
+* optimized queries
+
+---
+
+# 68. SECURITY AND PRIVACY
+
+Follow privacy-by-design.
+
+Sensitive data must have:
+
+* minimum collection
+* minimum retention
+* restricted access
+* encryption/protection
+* auditability
+* deletion/retention policy
+
+Especially protect:
+
+* professional verification documents
+* Aadhaar-related data
+* private contact information
+* government/private employment information
+
+Never expose these through public APIs.
+
+---
+
+# 69. TESTING
+
+Create:
+
+## Unit tests
+
+* Domain entities
+* Business rules
+* State transitions
+* Ranking strategies
+* Services
+
+## Integration tests
+
+* Repositories
+* PostgreSQL
+* Redis
+* Cloudinary adapter
+* External service adapters
+
+## API tests
+
+* Authentication
+* Authorization
+* Support
+* Comments
+* Evidence
+* Pagination
+* Filtering
+
+## Security tests
+
+* IDOR
+* Privilege escalation
+* Unauthorized access
+* Upload abuse
+* Rate limits
+
+## Frontend tests
+
+* Authentication modal
+* Problem creation
+* Experience creation
+* Public browsing
+* Auth-required interactions
+* Forms
+* Loading/error states
+
+Focus on meaningful test coverage.
+
+---
+
+# 70. CI/CD
+
+Create production-ready CI/CD.
+
+Pipeline:
+
+```text
+Lint
+ ↓
+Type Check
+ ↓
+Unit Tests
+ ↓
+Integration Tests
+ ↓
+Security Checks
+ ↓
+Build
+ ↓
+Deploy
+```
+
+Use Docker.
+
+Create:
+
+```text
+.env.example
+```
+
+Never commit secrets.
+
+---
+
+# 71. ENVIRONMENT VARIABLES
+
+Example:
+
+```text
+DATABASE_URL
+REDIS_URL
+
+GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET
+
+CLOUDINARY_CLOUD_NAME
+CLOUDINARY_API_KEY
+CLOUDINARY_API_SECRET
+
+SECRET_KEY
+```
+
+Never include actual production secrets.
+
+---
+
+# 72. DOCUMENTATION
+
+Create:
+
+```text
+docs/
+    architecture.md
+    database.md
+    api.md
+    security.md
+    scalability.md
+    deployment.md
+    development.md
+
+    decisions/
+        modular-monolith.md
+        database.md
+        caching.md
+        search.md
+        events.md
+```
+
+Document:
+
+* Why modular monolith?
+* Why PostgreSQL?
+* Why Redis?
+* Why Celery?
+* Why Cloudinary?
+* Why no Kafka initially?
+* Why no Elasticsearch initially?
+* How concurrency works
+* How professional verification works
+* How sensitive documents are protected
+* How services can be extracted later
+
+---
+
+# 73. OOSD EXAMPLE
+
+Do NOT write:
+
+```text
+ProblemView
+    ↓
+Cloudinary API
+    ↓
+Redis
+    ↓
+Email
+    ↓
+Database
+```
+
+Instead:
+
+```text
+ProblemController
+        ↓
+CreateProblemUseCase
+        ↓
+ProblemDomainService
+        ↓
+ProblemRepository
+        ↓
+Infrastructure Adapter
+```
+
+For media:
+
+```text
+CreateProblemUseCase
+        ↓
+MediaService
+        ↓
+MediaStorageInterface
+        ↓
+CloudinaryAdapter
+```
+
+For notifications:
+
+```text
+ProblemCreatedEvent
+        ↓
+NotificationHandler
+        ↓
+NotificationService
+```
+
+This demonstrates proper separation of concerns.
+
+---
+
+# 74. NO OVER-ENGINEERING
+
+Do not add technology merely because it is popular.
+
+Do NOT automatically add:
+
+* Kafka
+* Kubernetes
+* Elasticsearch
+* Microservices
+* GraphQL
+* Event sourcing
+* CQRS everywhere
+* Redis locks everywhere
+
+Instead ask:
+
+> What actual problem does this technology solve?
+
+Start simple but architecturally strong.
+
+---
+
+# 75. IMPLEMENTATION PHASES
+
+Build incrementally.
+
+## Phase 1
+
+Architecture
+
+* Repository structure
+* Domain boundaries
+* ER diagram
+* Database schema
+* API architecture
+
+## Phase 2
+
+Authentication
+
+* Google OAuth
+* Account creation
+* Profile
+* Roles
+
+## Phase 3
+
+Problems
+
+* Create
+* Browse
+* Search
+* Filter
+* Support
+* Evidence
+* Location
+
+## Phase 4
+
+Experience & Ideas
+
+* Create
+* Browse
+* Support
+* Comments
+* Replies
+* Related Problems
+
+## Phase 5
+
+Social features
+
+* Comments
+* Replies
+* Bookmark
+* Follow
+* Share
+
+## Phase 6
+
+Professional verification
+
+* Professional profile
+* Document verification
+* Optional Aadhaar fallback
+* Admin verification
+* Verification badge
+
+## Phase 7
+
+Government dashboard
+
+* Assignment
+* Status
+* Responses
+* Progress
+* Evidence
+
+## Phase 8
+
+Issue clustering
+
+* Duplicate detection
+* Clusters
+* Aggregated reporting
+
+## Phase 9
+
+Projects
+
+* Project creation
+* Milestones
+* Updates
+* Proof of work
+
+## Phase 10
+
+Funding architecture
+
+* Campaign
+* Contributions
+* Expenses
+* Proof
+* Payment abstraction
+
+## Phase 11
+
+Search + notifications + analytics
+
+## Phase 12
+
+Security + scalability + performance + production hardening
+
+---
+
+# 76. FINAL ACCEPTANCE CRITERIA
+
+The system is successful only if:
+
+### Public
+
+Anyone can browse public content without login.
+
+### Authentication
+
+Google OAuth only.
+
+No OTP after Google login.
+
+### Interaction
+
+Login required for write/interact operations.
+
+### Problems
+
+Support:
+
+* Multiple media
+* GPS/location
+* Support
+* Comments
+* Evidence
+* Status
+* Government response
+* Clustering
+* Proof of work
+
+### Experience
+
+Support:
+
+* Working professionals
+* Retired professionals
+* Domain experts
+* Government professionals
+* Armed forces professionals
+* Experienced citizens
+
+And:
+
+* Support
+* Comments
+* Replies
+* Evidence
+* Problem linking
+* Bookmark
+* Follow
+
+### Verification
+
+Professional verification is separate from authentication.
+
+Aadhaar may be an optional fallback verification mechanism where legally/compliantly appropriate.
+
+### Government
+
+Authorized officials can manage assigned issues.
+
+### Transparency
+
+Public users can see meaningful progress and proof where information is public.
+
+### Architecture
+
+Must follow:
+
+**OOSD + SOLID + Clean Architecture + Modular Monolith + Separation of Concerns + Dependency Inversion.**
+
+### Scalability
+
+Architecture must have a credible path from:
+
+**1K → 100K → 1M → 10M+ users.**
+
+### Security
+
+Sensitive information must never leak through public APIs.
+
+### Maintainability
+
+No giant classes.
+
+No giant views.
+
+No fat serializers.
+
+No duplicated business logic.
+
+No infrastructure dependencies inside domain logic.
+
+---
+
+# 77. YOUR FIRST RESPONSE
+
+Before writing a large amount of implementation code, first produce the following:
+
+## A. System Architecture Diagram
+
+Show:
+
+```text
+User
+ ↓
+CDN / Next.js
+ ↓
+API / Load Balancer
+ ↓
+Django Application
+ ↓
+Domain/Application Layers
+ ↓
+PostgreSQL / Redis / Celery / Cloudinary
+```
+
+and explain every component.
+
+## B. Domain Architecture
+
+Explain every module and its responsibility.
+
+## C. OOSD Architecture
+
+Show:
+
+```text
+Presentation
+Application
+Domain
+Infrastructure
+```
+
+with examples.
+
+## D. Complete Database ER Design
+
+Show all major entities and relationships.
+
+## E. API Contract
+
+List major endpoints with:
+
+* Method
+* URL
+* Auth requirement
+* Request
+* Response
+* Permissions
+
+## F. Authentication Flow
+
+Show Google OAuth and public-first login behavior.
+
+## G. Professional Verification Flow
+
+Show:
+
+```text
+Profile
+ ↓
+Verification Request
+ ↓
+Document
+ ↓
+Review
+ ↓
+Verified / Rejected
+```
+
+## H. Problem Lifecycle
+
+Show complete status transition diagram.
+
+## I. Issue Clustering Architecture
+
+Explain duplicate detection and aggregation.
+
+## J. Scalability Architecture
+
+Explain what changes at:
+
+```text
+100K
+1M
+10M+
+```
+
+## K. Security Architecture
+
+Explain authentication, authorization, sensitive documents, Aadhaar privacy, uploads, rate limiting and audit logs.
+
+## L. Implementation Roadmap
+
+Then implement the system phase-by-phase.
+
+---
+
+# 78. FINAL ENGINEERING PRINCIPLE
+
+Build JanDrishti with this mindset:
+
+> **Simple where possible. Strong where necessary. Scalable by design.**
+
+Do not over-engineer the MVP.
+
+But never compromise on:
+
+* Clean architecture
+* Security
+* Data integrity
+* Privacy
+* Scalability
+* Maintainability
+* Correct concurrency handling
+* Good UX
+* Public transparency
+
+The final product should feel like a serious platform that could eventually serve **millions of citizens, professionals and government stakeholders**.
+
+# JAN DRISHTI
+
+## See. Suggest. Solve.
